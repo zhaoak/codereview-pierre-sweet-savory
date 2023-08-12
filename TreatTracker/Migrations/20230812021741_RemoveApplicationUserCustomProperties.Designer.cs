@@ -11,8 +11,8 @@ using TreatTracker.Models;
 namespace TreatTracker.Migrations
 {
     [DbContext(typeof(TreatTrackerContext))]
-    [Migration("20230812020439_UpdateAccountProperties")]
-    partial class UpdateAccountProperties
+    [Migration("20230812021741_RemoveApplicationUserCustomProperties")]
+    partial class RemoveApplicationUserCustomProperties
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

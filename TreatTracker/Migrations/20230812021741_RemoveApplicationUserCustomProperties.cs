@@ -4,7 +4,7 @@
 
 namespace TreatTracker.Migrations
 {
-    public partial class UpdateAccountProperties : Migration
+    public partial class RemoveApplicationUserCustomProperties : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
