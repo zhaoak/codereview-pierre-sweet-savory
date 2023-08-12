@@ -3,5 +3,16 @@
   <a href="/Treats">Treat List</a> | 
   <a href="/Flavors">Flavor List</a>
   
-  <a href="/">Login (placeholder)</a>
+  @if (User.Identity.IsAuthenticated)
+  {
+    <p>Hello, @User.Identity.Name | </p>
+    @using (Html.BeginForm("LogOff", "Account"))
+    {
+      <input type="submit" value="Log out" />
+    }
+  }
+  else
+  {
+    @Html.ActionLink("Login", "Login", "Account")
+  }
 </nav>
