@@ -1,0 +1,37 @@
+@{
+  Layout = "_Layout";
+}
+
+@using TreatTracker.Models;
+
+<h1>Full Treat List</h1>
+
+@if (@Model.Count == 0)
+{
+  <h3>No treats have been added yet!</h3>
+} 
+else
+{
+  <main class="treat-index-list">
+    @foreach (Treat treat in Model)
+    {
+      <div class="treat-card">
+        @Html.ActionLink($"{treat.Name}", "Details", new { id = treat.TreatId })
+        <p><em>@treat.Description</em></p>
+        <ul class="treat-card-flavor-list">
+        @foreach (FlavorTreat flavor in treat.JoinEntities)
+        {
+        <li>flavor.Flavor.Name</li>
+        }
+        </ul>
+      </div>
+    }
+  </main>
+}
+
+@if (User.Identity.IsAuthenticated)
+{
+  <p>@Html.ActionLink("Add new treat", "Create")</p>
+}
+<br>
+<p>@Html.ActionLink("Home", "Index", "Home")</p>

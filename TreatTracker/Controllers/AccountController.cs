@@ -64,11 +64,13 @@ public class AccountController : Controller {
     }
   }
 
+  // login page
   public ActionResult Login()
   {
     return View();
   }
 
+  // login post route
   [HttpPost]
   public async Task<ActionResult> Login(LoginViewModel model)
   {
@@ -97,6 +99,7 @@ public class AccountController : Controller {
     }
   }
 
+  // logout route
   [HttpPost]
   public async Task<ActionResult> LogOff()
   {
