@@ -1,0 +1,30 @@
+@{
+  Layout = "_Layout";
+}
+
+@using TreatTracker.ViewModels
+
+@model LoginViewModel
+
+<h2>Log in with an existing account</h2>
+<hr>
+
+@if(!ViewData.ModelState.IsValid)
+{
+  @Html.ValidationSummary("Please fix the following error(s) and then resubmit the form:")
+}
+
+@using (Html.BeginForm())
+{
+  @Html.LabelFor(m => m.Email)
+  @Html.TextBoxFor(m => m.Email)
+  <br>
+
+  @Html.LabelFor(m => m.Password)
+  @Html.EditorFor(m => m.Password)
+
+  <input type="submit" value="Log in" />
+}
+
+<p>@Html.ActionLink("Register for an account instead", "Register")</p>
+<p>@Html.ActionLink("Cancel", "Index")</p>

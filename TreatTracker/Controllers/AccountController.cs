@@ -48,7 +48,8 @@ public class AccountController : Controller {
       IdentityResult result = await _userManager.CreateAsync(user, model.Password);
       if (result.Succeeded)
       {
-        // if success, redirect to site homepage
+        // if success, redirect to site homepage and login user with new account
+        Microsoft.AspNetCore.Identity.SignInResult LoginResult = await _signInManager.PasswordSignInAsync(model.Email, model.Password, isPersistent: true, lockoutOnFailure: false);
         return RedirectToAction("Index", "Home");
       }
       else
@@ -61,5 +62,46 @@ public class AccountController : Controller {
         return View(model);
       }
     }
+  }
+
+  public ActionResult Login()
+  {
+    return View();
+  }
+
+  [HttpPost]
+  public async Task<ActionResult> Login(LoginViewModel model)
+  {
+    // check model validity
+    if (!ModelState.IsValid)
+    {
+      // if invalid
+      return View(model);
+    }
+    // if valid
+    else
+    {
+      // await signin result
+      Microsoft.AspNetCore.Identity.SignInResult result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, isPersistent: true, lockoutOnFailure: false);
+      if (result.Succeeded)
+      {
+        // if success, redirect to site homepage
+        return RedirectToAction("Index", "Home");
+      }
+      else
+      {
+        // if fail, error at login page
+        ModelState.AddModelError("", "Username or password not recognized.");
+        return View(model);
+      }
+    }
+  }
+
+  [HttpPost]
+  public async Task<ActionResult> LogOff()
+  {
+    await _signInManager.SignOutAsync();
+    // redirect to site homepage on logout
+    return RedirectToAction("Index", "Home");
   }
 }
