@@ -31,4 +31,10 @@ public class TreatsController : Controller
                             .ToList();
       return View(TreatList);
     }
+
+    public ActionResult Details(int treatId)
+    {
+      Treat thisTreat = _db.Treats.FirstOrDefault(treat => treat.TreatId == treatId);
+      return View(thisTreat);
+    }
 }
