@@ -37,4 +37,31 @@ public class TreatsController : Controller
       Treat thisTreat = _db.Treats.FirstOrDefault(treat => treat.TreatId == treatId);
       return View(thisTreat);
     }
+
+    [Authorize]
+    public ActionResult Create()
+    {
+      return View();
+    }
+
+    [Authorize]
+    [HttpPost]
+    public async Task<ActionResult> Create(Treat treat)
+    {
+      if (!ModelState.IsValid)
+      {
+        // if not valid, redirect to create page 
+        return View(treat);
+      }
+      else
+      {
+        // if valid
+        string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        ApplicationUser currentUser = await _userManager.FindByIdAsync(userId);
+        treat.CreatedByUser = currentUser;
+        _db.Treats.Add(treat);
+        _db.SaveChanges();
+        return RedirectToAction("Index");
+      }
+    }
 }
