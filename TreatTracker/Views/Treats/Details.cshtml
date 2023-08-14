@@ -1,6 +1,26 @@
 @{
-  Layout = "_Layout";
+Layout = "_Layout";
 }
 
-@using TreatTracker.Models;
+@using TreatTracker.Models
+@model TreatTracker.Models.Treat
 
+<h2>@Model.Name</h2>
+
+<img src="http://placekitten.com/200/300" />
+
+<p class="treat-detail-description"><em>@Model.Description</em></p>
+
+<h4>Flavors:</h4>
+<ul>
+@if (Model.JoinEntities.Count == 0)
+{
+  <li><em>None.</em></li>
+}
+@foreach (FlavorTreat flavor in Model.JoinEntities)
+{
+  <li>flavor.Flavor.Name</li>
+}
+</ul>
+
+<p>@Html.ActionLink("Back to Treat List", "Index")</p>

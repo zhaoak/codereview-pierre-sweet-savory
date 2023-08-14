@@ -32,9 +32,12 @@ public class TreatsController : Controller
       return View(TreatList);
     }
 
-    public ActionResult Details(int treatId)
+    public ActionResult Details(int id)
     {
-      Treat thisTreat = _db.Treats.FirstOrDefault(treat => treat.TreatId == treatId);
+      Treat thisTreat = _db.Treats
+                          .Include(treat => treat.JoinEntities)
+                          .ThenInclude(join => join.Flavor)
+                          .FirstOrDefault(treat => treat.TreatId == id);
       return View(thisTreat);
     }
 
