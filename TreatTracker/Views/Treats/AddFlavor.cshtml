@@ -1,0 +1,19 @@
+@{
+  Layout = "_Layout";
+}
+
+@model TreatTracker.Models.Treat
+
+<h4>Add a flavor to this treat: <strong>@Html.DisplayFor(model => model.Name)</strong></h4>
+
+@using (Html.BeginForm())
+{
+    @Html.HiddenFor(model => model.TreatId)
+
+    @Html.Label("Select Flavor to add: ")
+    @Html.DropDownList("FlavorId")
+
+    <input type="submit" value="Save" />
+}
+
+<p>@Html.ActionLink("Back to list", "Index")</p>

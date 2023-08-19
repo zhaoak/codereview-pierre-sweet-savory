@@ -16,7 +16,7 @@ Layout = "_Layout";
 }
 @foreach (FlavorTreat treat in Model.JoinEntities)
 {
-<li>@Html.ActionLink($"{treat.Treat.Name}", "Details", new { id = treat.TreatId }, "Treats")</li>
+<li>@Html.ActionLink($"{treat.Treat.Name}", "Details", "Treats", new { id = treat.TreatId })</li>
 }
 </ul>
 

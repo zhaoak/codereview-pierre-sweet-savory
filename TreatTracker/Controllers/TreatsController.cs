@@ -27,6 +27,7 @@ public class TreatsController : Controller
     {
       List<Treat> TreatList = _db.Treats
                             .Include(treat => treat.JoinEntities)
+                            .ThenInclude(join => join.Flavor)
                             .OrderBy(treat => treat.Name)
                             .ToList();
       return View(TreatList);
@@ -108,5 +109,33 @@ public class TreatsController : Controller
       _db.Treats.Remove(thisTreat);
       _db.SaveChanges();
       return RedirectToAction("Index");
+    }
+
+    [Authorize]
+    public ActionResult AddFlavor(int id)
+    {
+      Treat thisTreat = _db.Treats.FirstOrDefault(treat => treat.TreatId == id);
+      ViewBag.FlavorId = new SelectList(_db.Flavors, "FlavorId", "Name");
+      return View(thisTreat);
+    }
+
+    [Authorize]
+    [HttpPost]
+    public ActionResult AddFlavor(Treat treat, int flavorId)
+    {
+      // check if treat-flavor relationship already exists
+      #nullable enable
+      FlavorTreat? joinEntity = _db.FlavorTreats.FirstOrDefault(join => (join.FlavorId == flavorId && join.TreatId == treat.TreatId));
+      #nullable disable
+
+      // if relationship doesn't exist AND at least one flavor exists
+      if (joinEntity == null && flavorId != 0)
+      {
+        // then create and add the new relationship
+        _db.FlavorTreats.Add(new FlavorTreat() { FlavorId = flavorId, TreatId = treat.TreatId });
+        _db.SaveChanges();
+      }
+      // then redirect to the details page
+      return RedirectToAction("Details", new { id = treat.TreatId });
     }
 }

@@ -19,7 +19,7 @@ Layout = "_Layout";
 }
 @foreach (FlavorTreat flavor in Model.JoinEntities)
 {
-  <li>flavor.Flavor.Name</li>
+  <li>@flavor.Flavor.Name</li>
 }
 </ul>
 
@@ -28,6 +28,7 @@ Layout = "_Layout";
   <em>Treat added by @Model.CreatedByUser</em>
   <p>@Html.ActionLink("Edit this treat", "Edit", new { id = Model.TreatId })</p>
   <p>@Html.ActionLink("Delete this treat", "Delete", new { id = Model.TreatId })</p>
+  <p>@Html.ActionLink("Add a flavor to this treat", "AddFlavor", new { id = Model.TreatId })</p>
 }
 
 <p>@Html.ActionLink("Back to Treat List", "Index")</p>
