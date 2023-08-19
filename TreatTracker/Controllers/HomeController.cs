@@ -20,7 +20,12 @@ namespace TreatTracker.Controllers
       [HttpGet("/")]
       public ActionResult Index()
       {
-        return View();
+        List<Treat> treatList = _db.Treats.ToList();
+        List<Flavor> flavorList = _db.Flavors.ToList();
+        Dictionary<string, object> model = new Dictionary<string, object>();
+        model.Add("treats", treatList);
+        model.Add("flavors", flavorList);
+        return View(model);
       }
     }
 }

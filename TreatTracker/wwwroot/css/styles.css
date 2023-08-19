@@ -1,0 +1,19 @@
+body {
+  text-align: center;
+  background-color: #DEC1FF;
+}
+
+nav {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-evenly;
+}
+
+li {
+  list-style: none;
+}
+
+.navbar-account-section {
+  display: flex;
+  flex-flow: row nowrap;
+}

@@ -2,18 +2,38 @@
   Layout = "_Layout";
 }
 
+@using TreatTracker.Models
+
 <h1>Welcome to Pierre's Treat Tracker!</h1>
 <hr>
 <h4>Browse our fine selection of flavorful treats...</h4>
 
 <main>
   <section class="homepage-treat-display">
-    treat listing here (placeholder)
+    <ul>
+    @if (Model["treats"].Count == 0)
+    {
+      <li><em>No treats.</em></li>
+    }
+    @foreach (Treat treat in Model["treats"])
+    {
+    <li>@Html.ActionLink($"{@treat.Name}", "Details", "Treats", new { id = treat.TreatId })</li>
+    }
+    <ul>
   </section>
 <br>
 
 <h4>Or sort by flavor!</h4>
   <section class="homepage-flavor-display">
-    flavor listing here (placeholder)
+    <ul>
+    @if (Model["flavors"].Count == 0)
+    {
+      <li><em>No flavors.</em></li>
+    }
+      @foreach (Flavor flavor in Model["flavors"])
+      {
+        <li>@Html.ActionLink($"{flavor.Name}", "Details", "Flavors", new { id = flavor.FlavorId})</li>
+      }
+    </ul>
   </section>
 </main>
