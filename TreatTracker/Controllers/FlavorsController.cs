@@ -20,5 +20,15 @@ namespace TreatTracker.Controllers
       List<Flavor> model = _db.Flavors.ToList();
       return View(model);
     }
+
+    public ActionResult Details(int id)
+    {
+      Flavor thisFlavor = _db.Flavors
+                          .Include(flavor => flavor.CreatedByUser)
+                          .Include(flavor => flavor.JoinEntities)
+                          .ThenInclude(join => join.Treat)
+                          .FirstOrDefault(flavor => flavor.FlavorId== id);
+      return View(thisFlavor);
+    }
   }
 }

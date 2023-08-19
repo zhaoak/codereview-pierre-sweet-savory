@@ -1,0 +1,30 @@
+@{
+Layout = "_Layout";
+}
+
+@using TreatTracker.Models
+@model TreatTracker.Models.Flavor
+
+<h2>@Model.Name</h2>
+<h4>@Model.Description</h4>
+
+<h4>Treats with this flavor:</h4>
+<ul>
+@if (Model.JoinEntities.Count == 0)
+{
+  <li><em>None available.</em></li>
+}
+@foreach (FlavorTreat treat in Model.JoinEntities)
+{
+<li>@Html.ActionLink($"{treat.Treat.Name}", "Details", new { id = treat.TreatId }, "Treats")</li>
+}
+</ul>
+
+@if (User.Identity.IsAuthenticated)
+{
+  <em>Flavor added by @Model.CreatedByUser</em>
+  <p>@Html.ActionLink("Edit this flavor", "Edit", new { id = Model.FlavorId})</p>
+  <p>@Html.ActionLink("Delete this flavor", "Delete", new { id = Model.FlavorId})</p>
+}
+
+<p>@Html.ActionLink("Back to Flavor List", "Index")</p>
