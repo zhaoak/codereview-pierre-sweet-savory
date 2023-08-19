@@ -20,6 +20,14 @@ Layout = "_Layout";
 @foreach (FlavorTreat flavor in Model.JoinEntities)
 {
   <li>@flavor.Flavor.Name</li>
+  @if (User.Identity.IsAuthenticated)
+  {
+      @using (Html.BeginForm("DeleteJoin", "Treats"))
+      {
+        @Html.Hidden("joinId", @flavor.FlavorTreatId)
+        <input type="submit" value="Remove Flavor"/>
+      }
+  }
 }
 </ul>
 
