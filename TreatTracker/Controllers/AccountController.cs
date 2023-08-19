@@ -7,15 +7,13 @@ using TreatTracker.ViewModels;
 namespace TreatTracker.Controllers;
 
 public class AccountController : Controller {
-  private readonly TreatTrackerContext _db;
   private readonly UserManager<ApplicationUser> _userManager;
   private readonly SignInManager<ApplicationUser> _signInManager;
 
-  public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, TreatTrackerContext db)
+  public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
   {
     _userManager = userManager;
     _signInManager = signInManager;
-    _db = db;
   }
 
   // login page

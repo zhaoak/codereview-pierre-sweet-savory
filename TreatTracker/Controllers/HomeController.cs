@@ -11,11 +11,9 @@ namespace TreatTracker.Controllers
     public class HomeController : Controller
     {
       private readonly TreatTrackerContext _db;
-      private readonly UserManager<ApplicationUser> _userManager;
 
-      public HomeController(UserManager<ApplicationUser> userManager, TreatTrackerContext db)
+      public HomeController(TreatTrackerContext db)
       {
-        _userManager = userManager;
         _db = db;
       }
 
