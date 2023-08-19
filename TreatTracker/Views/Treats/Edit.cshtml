@@ -14,11 +14,14 @@
 {
   @Html.HiddenFor(model => model.TreatId)
 
-  <p>@Html.LabelFor(model => model.Name)</p>
+  <p>@Html.LabelFor(model => model.Name):</p>
   <p>@Html.EditorFor(model => model.Name)</p>
   
-  <p>@Html.LabelFor(model => model.Description)</p>
+  <p>@Html.LabelFor(model => model.Description):</p>
   <p>@Html.EditorFor(model => model.Description)</p>
+
+  <p>URL to image: </p>
+  <p>@Html.TextBoxFor(model => model.ImageURL)</p>
 
   <input type="submit" value="Save" />
 }

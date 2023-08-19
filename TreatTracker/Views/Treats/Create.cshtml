@@ -12,13 +12,11 @@
 
 @using (Html.BeginForm())
 {
-  @Html.LabelFor(model => model.Name)
-  @Html.TextBoxFor(model => model.Name)
-  <br>
+  <p>@Html.LabelFor(model => model.Name):</p>
+  <p>@Html.TextBoxFor(model => model.Name)</p>
 
-  @Html.LabelFor(model => model.Description)
-  @Html.TextBoxFor(model => model.Description)
-  <br>
+  <p>@Html.LabelFor(model => model.Description):</p>
+  <p>@Html.TextBoxFor(model => model.Description)</p>
 
   <p>URL to image: </p>
   @Html.TextBoxFor(model => model.ImageURL)
