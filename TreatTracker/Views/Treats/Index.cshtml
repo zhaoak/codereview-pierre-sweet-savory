@@ -20,6 +20,7 @@ else
         @Html.ActionLink($"{treat.Name}", "Details", new { id = treat.TreatId })
         <p><em>@treat.Description</em></p>
         <ul class="treat-card-flavor-list">
+          <p>Flavors:</p>
         @foreach (FlavorTreat flavor in treat.JoinEntities)
         {
         <li>@flavor.Flavor.Name</li>

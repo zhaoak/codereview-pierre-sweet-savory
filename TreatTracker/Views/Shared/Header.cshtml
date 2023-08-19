@@ -1,12 +1,13 @@
 <nav class="top-nav-bar">
   <a href="/">Homepage</a> | 
   <a href="/Treats">Treat List</a> | 
-  <a href="/Flavors">Flavor List</a>
+  <a href="/Flavors">Flavor List</a> |
   
   @if (User.Identity.IsAuthenticated)
   {
   <div class="navbar-account-section">
-    <em>Hello, @User.Identity.Name | </em>    @using (Html.BeginForm("LogOff", "Account"))
+    <em>Hello, @User.Identity.Name</em>
+    @using (Html.BeginForm("LogOff", "Account"))
     {
       <input type="submit" value="Log out" />
     }
