@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using TreatTracker.Models;
 using System.Collections.Generic;
 using System.Linq;
@@ -102,6 +103,34 @@ namespace TreatTracker.Controllers
       _db.Flavors.Remove(thisFlavor);
       _db.SaveChanges();
       return RedirectToAction("Index");
+    }
+
+    [Authorize]
+    public ActionResult AddTreat(int id)
+    {
+      Flavor thisFlavor = _db.Flavors.FirstOrDefault(flavor => flavor.FlavorId == id);
+      ViewBag.TreatId = new SelectList(_db.Treats, "TreatId", "Name");
+      return View(thisFlavor);
+    }
+
+    [Authorize]
+    [HttpPost]
+    public ActionResult AddTreat(Flavor flavor, int treatId)
+    {
+      // check if treat-flavor relationship already exists
+      #nullable enable
+      FlavorTreat? joinEntity = _db.FlavorTreats.FirstOrDefault(join => (join.TreatId == treatId && join.FlavorId == flavor.FlavorId));
+      #nullable disable
+
+      // if relationship doesn't exist AND at least one treat exists
+      if (joinEntity == null && treatId != 0)
+      {
+        // then create and add the new relationship
+        _db.FlavorTreats.Add(new FlavorTreat() { FlavorId = flavor.FlavorId, TreatId = treatId });
+        _db.SaveChanges();
+      }
+      // then redirect to the details page
+      return RedirectToAction("Details", new { id = flavor.FlavorId });
     }
   }
 }
