@@ -16,7 +16,17 @@ Layout = "_Layout";
 }
 @foreach (FlavorTreat treat in Model.JoinEntities)
 {
-<li>@Html.ActionLink($"{treat.Treat.Name}", "Details", "Treats", new { id = treat.TreatId })</li>
+<li>
+  @Html.ActionLink($"{treat.Treat.Name}", "Details", "Treats", new { id = treat.TreatId })
+  @if (User.Identity.IsAuthenticated)
+  {
+      @using (Html.BeginForm("DeleteJoin", "Flavors"))
+      {
+        @Html.Hidden("joinId", @treat.FlavorTreatId)
+        <input type="submit" value="Remove Treat"/>
+      }
+  }
+</li>
 }
 </ul>
 
