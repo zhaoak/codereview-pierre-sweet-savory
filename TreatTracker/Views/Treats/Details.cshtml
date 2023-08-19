@@ -23,4 +23,10 @@ Layout = "_Layout";
 }
 </ul>
 
+@if (User.Identity.IsAuthenticated)
+{
+  <em>Treat added by @Model.CreatedByUser</em>
+  <p>@Html.ActionLink("Edit this treat", "Edit", new { id = Model.TreatId })</p>
+}
+
 <p>@Html.ActionLink("Back to Treat List", "Index")</p>

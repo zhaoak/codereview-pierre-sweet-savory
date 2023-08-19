@@ -1,0 +1,26 @@
+@{
+  Layout = "_Layout";
+}
+
+@model TreatTracker.Models.Treat
+
+<h2>Edit</h2>
+<hr>
+
+<h4>Edit this treat: @Html.DisplayFor(model => model.Name)</h4>
+<h6>Description: @Html.DisplayFor(model => model.Description)</h6>
+
+@using (Html.BeginForm())
+{
+  @Html.HiddenFor(model => model.TreatId)
+
+  <p>@Html.LabelFor(model => model.Name)</p>
+  <p>@Html.EditorFor(model => model.Name)</p>
+  
+  <p>@Html.LabelFor(model => model.Description)</p>
+  <p>@Html.EditorFor(model => model.Description)</p>
+
+  <input type="submit" value="Save" />
+}
+
+<p>@Html.ActionLink("Back to list", "Index")</p>
