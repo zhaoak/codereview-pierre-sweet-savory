@@ -3,16 +3,22 @@ using Microsoft.AspNetCore.Mvc;
 using TreatTracker.Models;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using System.Threading.Tasks;
+using System.Security.Claims;
 
 namespace TreatTracker.Controllers
 {
   public class FlavorsController : Controller
   {
     private readonly TreatTrackerContext _db;
+    private readonly UserManager<ApplicationUser> _userManager;
 
-    public FlavorsController(TreatTrackerContext db)
+    public FlavorsController(UserManager<ApplicationUser> userManager, TreatTrackerContext db)
     {
       _db = db;
+      _userManager = userManager;
     }
 
     public ActionResult Index()
@@ -29,6 +35,33 @@ namespace TreatTracker.Controllers
                           .ThenInclude(join => join.Treat)
                           .FirstOrDefault(flavor => flavor.FlavorId== id);
       return View(thisFlavor);
+    }
+
+    [Authorize]
+    public ActionResult Create()
+    {
+      return View();
+    }
+
+    [Authorize]
+    [HttpPost]
+    public async Task<ActionResult> Create(Flavor flavor)
+    {
+      if (!ModelState.IsValid)
+      {
+        // if not valid, redirect to create page 
+        return View(flavor);
+      }
+      else
+      {
+        // if valid
+        string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        ApplicationUser currentUser = await _userManager.FindByIdAsync(userId);
+        flavor.CreatedByUser = currentUser;
+        _db.Flavors.Add(flavor);
+        _db.SaveChanges();
+        return RedirectToAction("Index");
+      }
     }
   }
 }
