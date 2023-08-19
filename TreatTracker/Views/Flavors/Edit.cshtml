@@ -1,0 +1,30 @@
+@{
+  Layout = "_Layout";
+}
+
+@model TreatTracker.Models.Flavor
+
+<h2>Editing a flavor</h2>
+<h5><em>This flavor, specically:</em></h5>
+<hr>
+
+<h4>@Html.DisplayFor(model => model.Name)</h4>
+<h6>@Html.DisplayFor(model => model.Description)</h6>
+
+<p>@Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger", @style = "font-weight: 600;"})</p>
+<p>@Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger", @style = "font-weight: 600;"})</p>
+<hr>
+
+@using (Html.BeginForm())
+{
+  <p>@Html.LabelFor(model => model.Name):</p>
+  <p>@Html.TextBoxFor(model => model.Name)</p>
+
+  <p>@Html.LabelFor(model => model.Description):</p>
+  <p>@Html.TextBoxFor(model => model.Description)</p>
+
+  <input type="submit" value="Add new flavor" class="btn-default" />
+}
+<hr>
+<br>
+<p>@Html.ActionLink("Cancel", "Index")</p>
